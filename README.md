@@ -2,7 +2,7 @@
 
 BurnLens is a no-login AI spend audit for startup founders, CTOs, and finance operators who need to know whether their Cursor, Copilot, Claude, ChatGPT, Gemini, Windsurf, and API spend is creating leverage or leaking burn. It shows deterministic, finance-literate savings recommendations first, then uses an LLM only to write a concise personalized summary.
 
-**Live URL:** add your Vercel URL after deployment.
+**Live URL:** https://burnlens-exhy.vercel.app/
 
 ## Screenshots
 

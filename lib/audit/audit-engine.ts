@@ -81,12 +81,36 @@ function optimizedRecommendation(tool: ToolSpendInput): ToolRecommendation {
   });
 }
 
+function recommendationPriority(category: RecommendationCategory) {
+  switch (category) {
+    case "enterprise-misuse":
+      return 5;
+    case "right-size":
+      return 4;
+    case "downgrade":
+      return 3;
+    case "duplicate-tool":
+      return 2;
+    case "api-efficiency":
+      return 1;
+    default:
+      return 0;
+  }
+}
+
 function betterOf(current: ToolRecommendation, candidate: ToolRecommendation) {
   if (candidate.monthlySavings > current.monthlySavings) {
     return candidate;
   }
 
-  if (candidate.monthlySavings === current.monthlySavings && current.category === "optimized") {
+  if (
+    candidate.monthlySavings === current.monthlySavings &&
+    recommendationPriority(candidate.category) > recommendationPriority(current.category)
+  ) {
+    return candidate;
+  }
+
+  if (current.category === "optimized" && candidate.monthlySavings > 0) {
     return candidate;
   }
 
@@ -114,7 +138,7 @@ function evaluateSingleTool(tool: ToolSpendInput, input: AuditInput): ToolRecomm
           action: "Downgrade the single active user to the individual plan",
           recommendedPlan: getPlanLabel(tool.toolId, individualPlanId),
           savings: spend - targetCost,
-          reasoning: `${getPlanLabel(tool.toolId, tool.planId)} has collaboration or admin value, but one paid seat does not justify a team workspace. The individual plan covers the same solo workflow at about $${targetCost}/mo.`,
+          reasoning: `For a single active user, ${getPlanLabel(tool.toolId, tool.planId)} is probably more than necessary unless shared billing or admin controls are important. The individual plan should cover the same day-to-day workflow for roughly $${targetCost}/mo.`,
           confidence: "high",
           category: "downgrade"
         })
@@ -133,7 +157,7 @@ function evaluateSingleTool(tool: ToolSpendInput, input: AuditInput): ToolRecomm
           action: "Move from enterprise to the self-serve team tier until compliance needs mature",
           recommendedPlan: getPlanLabel(tool.toolId, teamPlanId),
           savings: spend - targetCost,
-          reasoning: `A ${teamSize}-person startup is below the size where SCIM, custom legal terms, and account management usually justify enterprise overhead. The team tier covers centralized billing at roughly $${targetCost}/mo for the submitted seat count.`,
+          reasoning: `For a ${teamSize}-person team, the enterprise tier may be unnecessary unless there are strict compliance or procurement requirements. The self-serve team plan still supports shared billing and admin controls at around $${targetCost}/mo.`,
           confidence: "high",
           category: "enterprise-misuse"
         })
@@ -153,7 +177,7 @@ function evaluateSingleTool(tool: ToolSpendInput, input: AuditInput): ToolRecomm
           action: "Remove unused seats and align paid licenses to team size",
           recommendedPlan: getPlanLabel(tool.toolId, tool.planId),
           savings,
-          reasoning: `The audit shows ${seats} paid seats for a ${teamSize}-person team. Even allowing for contractors, unused seats are the cleanest savings because they reduce spend without changing vendor or workflow.`,
+          reasoning: `The audit shows ${seats} paid seats for a ${teamSize}-person team. There may be a few inactive or duplicate licenses that can be removed without affecting the existing workflow.`,
           confidence: "high",
           category: "right-size"
         })
@@ -169,7 +193,7 @@ function evaluateSingleTool(tool: ToolSpendInput, input: AuditInput): ToolRecomm
         action: "Audit add-ons, stale annual commitments, and over-retail billing",
         recommendedPlan: getPlanLabel(tool.toolId, tool.planId),
         savings: spend - currentPlanCost,
-        reasoning: `Published pricing implies about $${currentPlanCost}/mo for this plan and seat count, while submitted spend is $${spend}/mo. The delta is likely add-ons, old pricing, excess credits, or inactive seats.`,
+        reasoning: `Based on current public pricing, this setup would normally cost around $${currentPlanCost}/mo. Since the reported spend is closer to $${spend}/mo, there may be legacy pricing, unused add-ons, inactive seats, or prepaid credits increasing the bill.`,
         confidence: "medium",
         category: "right-size"
       })
@@ -186,7 +210,7 @@ function evaluateSingleTool(tool: ToolSpendInput, input: AuditInput): ToolRecomm
         action: "Add spend controls, batch non-urgent jobs, and route easy work to cheaper models",
         recommendedPlan: "Credits + model routing",
         savings: apiSavings,
-        reasoning: `API spend above $250/mo usually has optimization room from caching, batch queues, model tiering, and prepaid credits. BurnLens models only ${Math.round(rate * 100)}% savings, leaving room for quality-critical traffic to stay on the current model.`,
+        reasoning: `API bills above $250/mo often have room for optimization through caching, batching background jobs, and routing simpler requests to cheaper models. This estimate assumes only partial optimization so quality-sensitive workloads can continue using the current model.`,
         confidence: spend >= 1000 ? "high" : "medium",
         category: "api-efficiency"
       })
@@ -221,7 +245,7 @@ function evaluateSingleTool(tool: ToolSpendInput, input: AuditInput): ToolRecomm
           action: "Move most users from Max to Team Standard and reserve Max for one power user",
           recommendedPlan: getPlanLabel("claude", "team"),
           savings: Math.max(0, spend - targetCost),
-          reasoning: "Max is excellent for heavy individual usage, but teams with mixed writing or research work usually get better governance and lower blended cost from standard Team seats.",
+          reasoning: "Claude Max works well for a few heavy users, but most mixed writing or research teams usually get better value by keeping only a small number of Max seats and moving everyone else to the standard Team plan.",
           confidence: "medium",
           category: "downgrade"
         })
@@ -262,7 +286,7 @@ function applyDuplicateCodingRules(input: AuditInput, recommendations: ToolRecom
       action: "Consolidate duplicate coding-assistant seats",
       recommendedPlan: `${retainedSeats} champion seat${retainedSeats === 1 ? "" : "s"}`,
       savings,
-      reasoning: `The stack includes multiple paid coding assistants. Keep the primary editor assistant for the team and retain ${retainedSeats} ${getToolPricing(matchingTool.toolId).name} seat${retainedSeats === 1 ? "" : "s"} for comparison or specialist workflows instead of paying for everyone twice.`,
+      reasoning: `The team is currently paying for multiple coding assistants with overlapping functionality. Keeping one primary tool across the team and retaining only ${retainedSeats} ${getToolPricing(matchingTool.toolId).name} seat${retainedSeats === 1 ? "" : "s"} for specific workflows could reduce unnecessary overlap.`,
       confidence: "medium",
       category: "duplicate-tool"
     });
@@ -299,7 +323,7 @@ function applyDuplicateChatRules(input: AuditInput, recommendations: ToolRecomme
       action: "Trim duplicate general-assistant seats",
       recommendedPlan: `${retainedSeats} shared seat${retainedSeats === 1 ? "" : "s"}`,
       savings,
-      reasoning: `For a ${input.primaryUseCase} use case, paying for multiple broad chat assistants across every seat creates overlapping value. Keep the best-fit assistant broadly deployed and retain a small pool for this tool where it is genuinely differentiated.`,
+      reasoning: `The current stack includes multiple general-purpose AI assistants with similar capabilities. Keeping one primary assistant for most users and limiting this tool to a smaller shared pool could reduce overlapping subscription costs.`,
       confidence: "medium",
       category: "duplicate-tool"
     });

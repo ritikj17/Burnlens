@@ -8,7 +8,6 @@ import { generatePersonalizedSummary } from "@/lib/ai-summary";
 import { getSiteUrl } from "@/lib/env";
 import { hashIdentifier, isRateLimited } from "@/lib/rate-limit";
 import { buildPublicAuditReport } from "@/lib/public-report";
-import { sendLeadConfirmationEmail } from "@/lib/email";
 import { fetchPublicAudit, insertAudit, insertLead } from "@/lib/supabase/server";
 import type { AuditInput, AuditResult, PrimaryUseCase, ToolId } from "@/types/audit";
 import { toolIds } from "@/types/audit";
@@ -152,19 +151,10 @@ export async function captureLeadAction(
     };
   }
 
-  try {
-    await sendLeadConfirmationEmail({
-      email: parsed.data.email,
-      companyName: parsed.data.companyName,
-      report
-    });
-  } catch {
-    return {
-      ok: true,
-      message:
-        "Your report details were saved, but the email provider did not confirm delivery."
-    };
-  }
+  return {
+    ok: true,
+    message: "Lead captured successfully."
+  };
 
   return {
     ok: true,

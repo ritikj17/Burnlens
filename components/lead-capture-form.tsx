@@ -9,13 +9,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
+export function LeadCaptureForm({
+  report
+}: {
+  report: PublicAuditReport;
+}) {
   const [isPending, setIsPending] = useState(false);
   const [message, setMessage] = useState("");
 
-  const lowSavings = report.result.totalMonthlySavings < 100;
+  const lowSavings =
+    report.result.totalMonthlySavings < 100;
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(
+    event: React.FormEvent<HTMLFormElement>
+  ) {
     event.preventDefault();
 
     setIsPending(true);
@@ -25,7 +32,9 @@ export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
     const formData = new FormData(form);
 
     const email = formData.get("email") as string;
-    const companyName = formData.get("companyName") as string;
+    const companyName = formData.get(
+      "companyName"
+    ) as string;
 
     try {
       await emailjs.send(
@@ -40,21 +49,32 @@ export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
         process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
       );
 
-      setMessage("Your report details were saved and the email was sent successfully.");
+      setMessage(
+        "Your report details were saved and the email was sent successfully."
+      );
 
       form.reset();
-    } catch {
-      setMessage("Your report details were saved, but the email could not be sent.");
+    } catch (error) {
+      console.error("EMAILJS ERROR:", error);
+
+      setMessage(
+        "Your report details were saved, but the email could not be sent."
+      );
     }
 
     setIsPending(false);
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border bg-card p-5 shadow-sm">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 rounded-lg border bg-card p-5 shadow-sm"
+    >
       <div>
         <h2 className="text-lg font-semibold tracking-normal">
-          {lowSavings ? "Monitor future savings" : "Save this report"}
+          {lowSavings
+            ? "Monitor future savings"
+            : "Save this report"}
         </h2>
 
         <p className="mt-1 text-sm text-muted-foreground">
@@ -66,7 +86,9 @@ export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="space-y-2 sm:col-span-2">
-          <Label htmlFor="lead-email">Email</Label>
+          <Label htmlFor="lead-email">
+            Email
+          </Label>
 
           <Input
             id="lead-email"
@@ -78,7 +100,9 @@ export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="company-name">Company</Label>
+          <Label htmlFor="company-name">
+            Company
+          </Label>
 
           <Input
             id="company-name"
@@ -88,7 +112,9 @@ export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="role">Role</Label>
+          <Label htmlFor="role">
+            Role
+          </Label>
 
           <Input
             id="role"
@@ -98,7 +124,9 @@ export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="lead-team-size">Team size</Label>
+          <Label htmlFor="lead-team-size">
+            Team size
+          </Label>
 
           <Input
             id="lead-team-size"
@@ -116,14 +144,20 @@ export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
         </p>
       ) : null}
 
-      <Button type="submit" className="w-full" disabled={isPending}>
+      <Button
+        type="submit"
+        className="w-full"
+        disabled={isPending}
+      >
         {isPending ? (
           <Loader2 className="size-4 animate-spin" />
         ) : (
           <Mail className="size-4" />
         )}
 
-        {isPending ? "Sending..." : "Email me the report"}
+        {isPending
+          ? "Sending..."
+          : "Email me the report"}
       </Button>
     </form>
   );

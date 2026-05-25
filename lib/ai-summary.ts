@@ -1,12 +1,14 @@
 import type { AuditInput, AuditResult } from "@/types/audit";
 import { formatCurrency } from "@/lib/utils";
 
-const SYSTEM_PROMPT = `You are a finance-literate SaaS spend analyst for BurnLens by Credex.
-Write one concise paragraph of about 100 words.
-Be specific, quantified, and sober.
-Do not invent tools, prices, compliance requirements, discounts, or facts that are not present in the audit.
-If savings are low, say the stack already looks disciplined.
-If savings are high, mention that Credex can help source discounted AI credits or plan alternatives.
+const SYSTEM_PROMPT = `You are writing a short audit summary for an AI tooling cost review.
+Write one concise paragraph of about 80-120 words.
+Keep the tone practical, calm, and realistic.
+Do not exaggerate savings or sound promotional.
+Do not invent tools, pricing, discounts, compliance requirements, or usage patterns that are not present in the audit.
+If savings are low, clearly say the current setup already looks fairly reasonable.
+If savings are higher, mention practical areas like duplicate tools, oversized plans, unused seats, or API optimization opportunities.
+Avoid startup jargon and avoid sounding like marketing copy.
 No markdown.`;
 
 export function buildSummaryPrompt(input: AuditInput, result: AuditResult) {
@@ -33,18 +35,19 @@ Write the personalized summary now.`;
 
 export function fallbackSummary(result: AuditResult) {
   if (result.totalMonthlySavings >= 500) {
-    return `BurnLens found ${formatCurrency(result.totalMonthlySavings)} in credible monthly savings, or ${formatCurrency(result.totalAnnualSavings)} annually, mostly from plan fit, duplicate tooling, seat cleanup, or API spend controls. The recommendation is not to cut AI usage blindly; it is to keep the workflows that create leverage while moving avoidable retail spend into right-sized plans and credit-backed usage. This is a strong Credex consultation case because the savings are large enough to justify procurement help.`;
+    return `BurnLens estimated approximately ${formatCurrency(result.totalMonthlySavings)} in possible monthly savings, or ${formatCurrency(result.totalAnnualSavings)} annually. Most of the opportunities come from overlapping tools, oversized plans, unused seats, or API usage patterns that may be more expensive than necessary. The recommendations are intended to reduce avoidable spend without forcing major workflow changes for the team. Because the estimated savings are relatively large, it may also be worth reviewing vendor pricing options or discounted infrastructure credits.`;
   }
 
   if (result.totalMonthlySavings > 0) {
-    return `BurnLens found ${formatCurrency(result.totalMonthlySavings)} in monthly savings, or ${formatCurrency(result.totalAnnualSavings)} annually. The stack is not wildly inefficient, but a few plan and seat adjustments can trim recurring spend without disrupting the team. Start with the highest-confidence recommendations, then revisit API routing or vendor consolidation after one billing cycle.`;
+    return `BurnLens estimated approximately ${formatCurrency(result.totalMonthlySavings)} in monthly savings opportunities, or ${formatCurrency(result.totalAnnualSavings)} annually. The current setup does not appear heavily inefficient, but there are a few areas where plan selection, seat counts, or overlapping tools may be creating unnecessary recurring costs. The simplest adjustments are probably the highest-confidence recommendations before making broader workflow or vendor changes.`;
   }
 
-  return "BurnLens did not find material savings from the submitted stack. That is a good signal: seat counts, plan choices, and usage profile look disciplined relative to published pricing. The best next step is to keep monitoring new pricing changes and credit opportunities rather than forcing a downgrade that could slow the team down.";
+  return "BurnLens did not identify many obvious savings opportunities from the submitted stack. Based on the current pricing assumptions, the selected plans, seat counts, and tooling choices already look fairly reasonable for the reported usage. In this situation, monitoring future pricing changes or usage growth is probably more useful than aggressively changing tools or downgrading plans.";
 }
 
 async function callAnthropic(prompt: string) {
   const apiKey = process.env.ANTHROPIC_API_KEY;
+
   if (!apiKey) {
     return null;
   }
@@ -59,7 +62,7 @@ async function callAnthropic(prompt: string) {
     body: JSON.stringify({
       model: process.env.ANTHROPIC_MODEL || "claude-sonnet-4-6",
       max_tokens: 180,
-      temperature: 0.3,
+      temperature: 0.2,
       system: SYSTEM_PROMPT,
       messages: [
         {
@@ -78,11 +81,14 @@ async function callAnthropic(prompt: string) {
     content?: Array<{ type: string; text?: string }>;
   };
 
-  return data.content?.find((part) => part.type === "text")?.text?.trim() || null;
+  return (
+    data.content?.find((part) => part.type === "text")?.text?.trim() || null
+  );
 }
 
 async function callOpenAI(prompt: string) {
   const apiKey = process.env.OPENAI_API_KEY;
+
   if (!apiKey) {
     return null;
   }
@@ -105,7 +111,8 @@ async function callOpenAI(prompt: string) {
           content: prompt
         }
       ],
-      max_output_tokens: 180
+      max_output_tokens: 180,
+      temperature: 0.2
     })
   });
 
@@ -118,28 +125,39 @@ async function callOpenAI(prompt: string) {
     output?: Array<{ content?: Array<{ text?: string }> }>;
   };
 
-  return data.output_text?.trim() || data.output?.flatMap((item) => item.content ?? []).find((item) => item.text)?.text?.trim() || null;
+  return (
+    data.output_text?.trim() ||
+    data.output
+      ?.flatMap((item) => item.content ?? [])
+      .find((item) => item.text)?.text?.trim() ||
+    null
+  );
 }
 
-export async function generatePersonalizedSummary(input: AuditInput, result: AuditResult) {
+export async function generatePersonalizedSummary(
+  input: AuditInput,
+  result: AuditResult
+) {
   const prompt = buildSummaryPrompt(input, result);
 
   try {
     const anthropicSummary = await callAnthropic(prompt);
+
     if (anthropicSummary) {
       return anthropicSummary;
     }
   } catch {
-    // The fallback below keeps the report useful when provider quota or keys fail.
+    // Fallback below keeps the report usable if provider keys or quota fail.
   }
 
   try {
     const openAiSummary = await callOpenAI(prompt);
+
     if (openAiSummary) {
       return openAiSummary;
     }
   } catch {
-    // The deterministic fallback is intentionally finance-specific and non-empty.
+    // Deterministic fallback keeps the report useful without AI providers.
   }
 
   return fallbackSummary(result);

@@ -1,19 +1,35 @@
 # Go-To-Market
 
-The exact target user is a seed to Series B technical founder, CTO, or finance/ops lead at a 5-80 person software startup that has moved from “everyone expensed ChatGPT” to “AI tools are now a line item.” They are not shopping for procurement software; they are feeling vague anxiety after seeing Cursor, Claude, ChatGPT, Copilot, Gemini, OpenAI, and Anthropic charges sprawl across cards and invoices.
+The target user for BurnLens is a technical founder, CTO, engineering manager, or operations lead at a small-to-mid-sized software startup, usually between 5 and 80 people. These are teams where AI tooling adoption happened gradually instead of through a centralized purchasing process. Individual employees started buying ChatGPT, Claude, Cursor, Copilot, Gemini, or API credits separately, and over time the company realized AI tooling had quietly become a noticeable monthly expense.
 
-Right before they need BurnLens, they are searching or scrolling through phrases like “Cursor business pricing worth it,” “ChatGPT Team vs Enterprise,” “OpenAI API bill suddenly high,” “Claude Team minimum seats,” or “AI tools for engineering team budget.” They may also be reading founder posts about burn reduction, AI agent tools, or CFO-style SaaS cleanup.
+Right before using a product like BurnLens, these users are usually searching for practical questions instead of “AI procurement software.” Typical searches would be things like:
 
-Specific zero-budget channels:
+- “Cursor business pricing worth it”
+- “ChatGPT Team vs Enterprise”
+- “Claude Team minimum seats”
+- “OpenAI API bill too high”
+- “best AI coding assistant for teams”
+- “how startups manage AI tool costs”
 
-- X founder and AI-builder circles: reply with a concrete teardown of public AI spend questions instead of generic launch posts.
-- Indie Hackers and FounderPal/Buildspace-style communities: post a “roast my AI stack” thread and audit the first 20 stacks manually.
-- r/SaaS, r/startups, r/LocalLLaMA, and r/ExperiencedDevs: share a transparent pricing benchmark post with a link to the tool.
-- Startup operator Slack groups, college founder groups, and engineering manager Discords: offer a private audit for teams above $500/month AI spend.
-- Hacker News: launch as “Show HN: I built a Mint-style audit for startup AI spend.”
+They are also likely to encounter the product while reading discussions around startup burn reduction, developer tooling, AI workflows, or SaaS cost cleanup.
 
-The first 100 users in 30 days should come from manual, specific distribution. Day 1: publish a thread with three anonymized teardown examples and ask founders to drop their stack. Days 2-7: personally audit 30 responses, DM each person their report, and ask permission to quote the savings anonymously. Week 2: turn the most surprising cases into a benchmark post. Week 3: partner with a startup CFO newsletter or fractional finance operator and give them a co-branded version. Week 4: launch on Product Hunt with the best before/after screenshots.
+The first distribution channels would be highly manual and community-driven rather than SEO-heavy.
 
-Credex’s unfair distribution channel is access to real discounted AI credit supply. Most “cost calculators” can only say “spend less.” Credex can say “you are overpaying retail, and we may have a credible route to the same usage at lower effective cost.” That changes the CTA from generic newsletter signup to a concrete savings conversation.
+- X/Twitter founder and AI-builder circles: reply directly to public discussions about AI spend with practical breakdowns instead of generic promotion.
+- Indie Hackers and startup communities: post “roast my AI stack” style threads and manually audit early submissions.
+- Reddit communities like r/SaaS, r/startups, r/ExperiencedDevs, and r/LocalLLaMA: share transparent benchmark examples and cost breakdown discussions.
+- Engineering and founder Discord/Slack groups: offer free private audits for teams already spending significant amounts on AI tools.
+- Hacker News: launch as a lightweight AI spend audit tool for startups and share real anonymized examples.
 
-Week-1 traction if this works: 150 completed audits, 35 saved reports, 12 high-savings leads over $500/month, 5 booked Credex consultations, and at least 3 public founder quotes about surprising spend discoveries.
+The first 100 users would likely come from direct outreach and public teardown-style examples instead of paid marketing. One realistic approach would be posting a thread showing 2-3 anonymized startup stacks and explaining where money was being wasted or duplicated. People usually respond well to concrete examples rather than feature lists.
+
+After that, I would manually review early submissions, send personalized reports, and ask users whether interesting savings discoveries could be shared anonymously. Those examples could later become benchmark posts or Product Hunt launch material.
+
+The biggest advantage Credex has is that it is connected to actual discounted AI credit supply. Most cost calculators can only recommend reducing usage or downgrading plans. Credex can potentially offer the same usage through cheaper infrastructure credits, which makes the audit more actionable than a generic SaaS savings calculator.
+
+If the product works well initially, realistic week-1 traction might look like:
+- 100-150 completed audits
+- 30-40 saved reports
+- 10+ teams with meaningful savings opportunities
+- a few booked consultation calls
+- several users sharing surprising spend discoveries publicly

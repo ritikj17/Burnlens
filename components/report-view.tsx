@@ -28,14 +28,14 @@ export function ReportView({ report, shareUrl }: { report: PublicAuditReport; sh
           <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
             <div>
               <Badge variant={recommendCredex ? "success" : result.savingsLevel === "optimized" ? "muted" : "secondary"}>
-                {recommendCredex ? "Credex-ready savings" : result.savingsLevel === "optimized" ? "Optimized stack" : "Savings found"}
+                {recommendCredex ? "Larger savings opportunity identified" : result.savingsLevel === "optimized" ? "Reasonably optimized setup" : "Potential savings identified"}
               </Badge>
               <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-normal md:text-6xl">
                 {formatCurrency(result.totalMonthlySavings)}
-                <span className="block text-2xl text-muted-foreground md:text-3xl">estimated monthly AI savings</span>
+                <span className="block text-2xl text-muted-foreground md:text-3xl">estimated monthly savings opportunity</span>
               </h1>
               <p className="mt-5 max-w-2xl text-base leading-7 text-muted-foreground">
-                Annualized, this audit points to {formatCurrency(result.totalAnnualSavings)} in potential savings across {result.recommendations.length} tools for a {report.teamSize}-person {report.primaryUseCase} team.
+                This audit estimates approximately {formatCurrency(result.totalAnnualSavings)} in yearly savings opportunities across {result.recommendations.length} tools for a {report.teamSize}-person {report.primaryUseCase} team.
               </p>
             </div>
             <div className="no-print flex flex-col gap-3 sm:flex-row">
@@ -51,7 +51,7 @@ export function ReportView({ report, shareUrl }: { report: PublicAuditReport; sh
           <div className="rounded-lg border bg-card p-6 shadow-sm">
             <div className="flex items-center gap-3">
               <CircleDollarSign className="size-5 text-primary" />
-              <h2 className="text-xl font-semibold tracking-normal">Personalized finance summary</h2>
+              <h2 className="text-xl font-semibold tracking-normal">Audit summary</h2>
             </div>
             <p className="mt-4 text-base leading-8 text-muted-foreground">{report.aiSummary}</p>
           </div>
@@ -60,9 +60,9 @@ export function ReportView({ report, shareUrl }: { report: PublicAuditReport; sh
             <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-6">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
-                  <h2 className="text-xl font-semibold tracking-normal text-emerald-950">Credex can help capture the savings</h2>
+                  <h2 className="text-xl font-semibold tracking-normal text-emerald-950">Credex may be able to help reduce these costs</h2>
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-emerald-900">
-                    Savings above $500/month usually justify procurement support, discounted credits, or vendor-level negotiation.
+                    For teams with larger AI budgets, procurement support, pricing negotiations, or discounted credits may help reduce overall spend further.
                   </p>
                 </div>
                 <Button asChild>
@@ -78,9 +78,9 @@ export function ReportView({ report, shareUrl }: { report: PublicAuditReport; sh
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="mt-1 size-5 text-primary" />
                 <div>
-                  <h2 className="text-xl font-semibold tracking-normal">You’re spending well.</h2>
+                  <h2 className="text-xl font-semibold tracking-normal">Your current setup already looks fairly reasonable.</h2>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    BurnLens found little or no obvious waste. The best play is to monitor pricing and credits instead of forcing unnecessary disruption.
+                    The audit did not find many obvious savings opportunities. In this case, monitoring pricing changes and usage growth is probably more useful than aggressively changing tools or plans.
                   </p>
                 </div>
               </div>
@@ -89,8 +89,8 @@ export function ReportView({ report, shareUrl }: { report: PublicAuditReport; sh
 
           <div>
             <div className="mb-4 flex items-center justify-between gap-4">
-              <h2 className="text-2xl font-semibold tracking-normal">Per-tool recommendations</h2>
-              <Badge variant="outline">{result.flaggedTools} flagged</Badge>
+              <h2 className="text-2xl font-semibold tracking-normal">Tool-by-tool review</h2>
+              <Badge variant="outline">{result.flaggedTools} possible issues</Badge>
             </div>
             <div className="space-y-4">
               {result.recommendations.map((recommendation) => (
@@ -109,7 +109,7 @@ export function ReportView({ report, shareUrl }: { report: PublicAuditReport; sh
                         <p className="mt-2 text-sm leading-6 text-muted-foreground">{recommendation.reasoning}</p>
                       </div>
                       <div className="shrink-0 rounded-lg border bg-muted/45 p-4 text-left md:w-48">
-                        <span className="block text-xs uppercase tracking-[0.12em] text-muted-foreground">Savings</span>
+                        <span className="block text-xs uppercase tracking-[0.12em] text-muted-foreground">Estimated savings</span>
                         <strong className="mt-1 block text-2xl tracking-normal">{formatCurrency(recommendation.monthlySavings)}</strong>
                         <span className="text-sm text-muted-foreground">per month</span>
                         {recommendation.recommendedPlan ? (
@@ -128,10 +128,10 @@ export function ReportView({ report, shareUrl }: { report: PublicAuditReport; sh
           <div className="rounded-lg border bg-card p-6">
             <div className="flex items-center gap-3">
               <ShieldCheck className="size-5 text-primary" />
-              <h2 className="text-xl font-semibold tracking-normal">Public report privacy</h2>
+              <h2 className="text-xl font-semibold tracking-normal">Shared report privacy</h2>
             </div>
             <p className="mt-3 text-sm leading-6 text-muted-foreground">
-              This URL excludes email and company name. It only shows team size, use case, tools, plan categories, savings, and recommendations.
+              This shared report removes identifying information like email addresses and company names. It only includes team size, tools, recommendations, and estimated savings details.
             </p>
           </div>
         </div>

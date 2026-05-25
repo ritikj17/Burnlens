@@ -2,11 +2,11 @@
 
 ## Hero Headline
 
-Find your hidden AI tax.
+See where your AI tool budget is actually going.
 
 ## Subheadline
 
-Audit Cursor, Claude, ChatGPT, Copilot, Gemini, APIs, and more in under three minutes.
+Audit ChatGPT, Claude, Cursor, Copilot, Gemini, APIs, and more in a few minutes with realistic savings recommendations.
 
 ## Primary CTA
 
@@ -16,28 +16,28 @@ Generate AI spend audit
 
 Mocked for the assignment:
 
-- “It caught our Copilot/Cursor overlap in a way that felt like a CFO wrote it, not a prompt.” — seed-stage CTO
-- “The low-savings result was weirdly reassuring. It made the product feel honest enough to forward.” — founder
-- “I would use this before renewing any AI contract above $1k/month.” — finance lead
+- “It pointed out overlapping subscriptions we had stopped noticing.” - seed-stage CTO
+- “The report was useful mainly because it didn’t try to force savings where there really weren’t any.” - startup founder
+- “I could actually imagine forwarding this to finance or operations instead of it feeling like a marketing calculator.” - operations lead
 
 ## FAQ
 
 ### Does BurnLens require a login?
 
-No. The audit runs first, then you can save the report by email if it is useful.
+No. The audit works immediately without requiring an account. If you want to save the report later, you can optionally enter your email after the audit is generated.
 
-### Is the math AI-generated?
+### Is the savings logic AI-generated?
 
-No. Savings calculations use deterministic rules and official pricing data. AI only writes the short summary paragraph.
+No. The pricing logic and recommendations are rule-based and tied to current pricing data. AI is only used to generate the short personalized summary.
 
-### Why does Credex care about this?
+### Why does Credex care about AI spend audits?
 
-Credex helps startups source discounted AI credits. The audit surfaces where credits, plan changes, or vendor consolidation can reduce burn.
+Credex helps startups access discounted AI credits and infrastructure. The audit helps identify situations where teams may be overpaying for plans, duplicate tools, or direct API usage.
 
-### Can I share the report publicly?
+### Can reports be shared publicly?
 
-Yes. Public links remove email and company identifiers while keeping tools, plan categories, savings, and recommendations.
+Yes. Public reports remove identifying details like email addresses and company names before generating shareable links.
 
-### What if my stack is already optimized?
+### What happens if my stack is already reasonably optimized?
 
-BurnLens says so. The goal is trust, not invented savings. You can still sign up for alerts when pricing changes.
+The audit will say so. The goal is to make the recommendations feel realistic and trustworthy instead of forcing unnecessary savings suggestions.

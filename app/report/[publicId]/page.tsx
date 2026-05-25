@@ -45,7 +45,7 @@ export async function generateMetadata({ params }: ReportPageProps): Promise<Met
       description,
       url,
       type: "article",
-      siteName: "BurnLens"
+      siteName: "BurnLens",
       images: [
         {
           url: `${getSiteUrl()}/og-image.png`,

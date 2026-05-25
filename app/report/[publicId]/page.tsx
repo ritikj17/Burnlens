@@ -33,8 +33,8 @@ export async function generateMetadata({ params }: ReportPageProps): Promise<Met
     };
   }
 
-  const title = `${formatCurrency(report.result.totalMonthlySavings)}/mo AI savings found`;
-  const description = `BurnLens audited a ${report.teamSize}-person ${report.primaryUseCase} team and found ${formatCurrency(report.result.totalAnnualSavings)} in annualized AI spend savings.`;
+  const title = `${formatCurrency(report.result.totalMonthlySavings)}/mo potential AI savings`;
+  const description = `BurnLens reviewed a ${report.teamSize}-person ${report.primaryUseCase} team and estimated approximately ${formatCurrency(report.result.totalAnnualSavings)} in yearly AI tooling savings opportunities.`;
   const url = `${getSiteUrl()}/report/${publicId}`;
 
   return {
@@ -46,11 +46,20 @@ export async function generateMetadata({ params }: ReportPageProps): Promise<Met
       url,
       type: "article",
       siteName: "BurnLens"
+      images: [
+        {
+          url: `${getSiteUrl()}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: "BurnLens AI spend audit"
+        }
+      ]
     },
     twitter: {
       card: "summary_large_image",
       title,
-      description
+      description,
+      images: [`${getSiteUrl()}/og-image.png`]
     }
   };
 }

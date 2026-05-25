@@ -111,7 +111,9 @@ Do a final full review pass across the project and push remaining refinements.
 **What I did:**  
 Did a complete final review pass across the project and pushed the remaining refinements. I updated several markdown files, improved realism in the reflections and interview notes, cleaned up recommendation wording inside the audit engine, and reviewed the overall product flow from the perspective of a first-time user.
 
-I also checked deployment behavior again, reviewed responsiveness issues, and verified tests and CI status before submission.
+I also reviewed deployment behavior again, fixed several responsiveness issues, and finalized the lightweight EmailJS integration for report delivery after deciding it was a simpler fit for the MVP than maintaining additional transactional email infrastructure.
+
+Finally, I verified tests, production builds, and deployment status before submission.
 
 **What I learned:**  
 The difference between a believable AI-assisted project and an obviously generated one usually comes down to specificity, tradeoffs, and realism rather than raw complexity.
@@ -130,6 +132,8 @@ Capture final screenshots, do one last verification pass, and submit the project
 
 **What I did:**  
 Final submission pass. Rechecked deployment, verified the latest report flow, reviewed screenshots and documentation one final time, and submitted the project.
+
+I also reviewed the final email flow again after deployment to ensure the EmailJS integration worked consistently across both local and deployed environments.
 
 **What I learned:**  
 This assignment rewards product judgment and prioritization much more than raw feature count.

@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
 const proof = [
-  "Mocked from 31 beta audits",
-  "$428 median monthly savings found",
-  "8 tools benchmarked against public pricing"
+  "Example recommendations based on startup pricing research",
+  "$428 median potential monthly savings in sample audits",
+  "8 major AI tools benchmarked using public pricing"
 ];
 
 const faqs = [
@@ -41,13 +41,13 @@ export default function Home() {
         <div className="container grid gap-12 py-12 md:grid-cols-[0.95fr_1.05fr] md:py-20 lg:gap-16">
           <div className="flex flex-col justify-center">
             <Badge variant="success" className="mb-5 w-fit">
-              Built for founders watching AI burn
+              Built for startups managing growing AI costs
             </Badge>
             <h1 className="max-w-2xl text-5xl font-semibold tracking-normal text-foreground md:text-6xl">
-              Find your hidden AI tax.
+              See where your AI tool budget is actually going.
             </h1>
             <p className="mt-5 max-w-xl text-lg leading-8 text-muted-foreground">
-              BurnLens audits Cursor, Copilot, Claude, ChatGPT, Gemini, API usage, and more to show which AI spend is leverage and which is just leakage.
+             BurnLens reviews tools like Cursor, Copilot, Claude, ChatGPT, Gemini, and API usage to identify overlapping subscriptions, oversized plans, and possible savings opportunities.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button size="lg" asChild>
@@ -81,7 +81,7 @@ export default function Home() {
               <BadgeDollarSign className="mb-4 size-6 text-primary" />
               <h2 className="text-xl font-semibold tracking-normal">Finance-first rules</h2>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                Recommendations explain the plan economics, seat math, and usage fit behind every dollar of suggested savings.
+                Recommendations explain why a specific plan, seat count, or tool setup may be more expensive than necessary based on current pricing and usage assumptions.
               </p>
             </CardContent>
           </Card>
@@ -90,7 +90,7 @@ export default function Home() {
               <LineChart className="mb-4 size-6 text-cyan-700" />
               <h2 className="text-xl font-semibold tracking-normal">Credex-ready leads</h2>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                High-savings audits route naturally toward discounted AI credits and hands-on procurement help.
+                Teams with larger savings opportunities can explore discounted credits or procurement support through Credex.
               </p>
             </CardContent>
           </Card>
@@ -99,7 +99,7 @@ export default function Home() {
               <ShieldCheck className="mb-4 size-6 text-amber-700" />
               <h2 className="text-xl font-semibold tracking-normal">Share without leaking</h2>
               <p className="mt-3 text-sm leading-6 text-muted-foreground">
-                Public reports strip email and company details while keeping the result useful for partners and teammates.
+                Public reports remove identifying information while keeping the recommendations and savings breakdown shareable internally.
               </p>
             </CardContent>
           </Card>
@@ -110,23 +110,23 @@ export default function Home() {
         <div className="container">
           <div className="mx-auto max-w-2xl text-center">
             <Sparkles className="mx-auto mb-4 size-6 text-primary" />
-            <h2 className="text-3xl font-semibold tracking-normal">Product Hunt polish, procurement discipline.</h2>
+            <h2 className="text-3xl font-semibold tracking-normal">Built to feel practical, not just promotional.</h2>
             <p className="mt-4 text-muted-foreground">
-              Mocked social proof for the assignment, modeled after the buyers Credex would actually reach.
+              Example testimonials written to reflect the types of startup teams the product is designed for.
             </p>
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-3">
             {[
               {
-                quote: "It caught our Copilot/Cursor overlap in a way that felt like a CFO wrote it, not a prompt.",
+                quote: "It pointed out overlapping subscriptions we had mostly stopped paying attention to.",
                 author: "Mock testimonial, seed-stage CTO"
               },
               {
-                quote: "The low-savings result was weirdly reassuring. It made the product feel honest enough to forward.",
+                quote: "The fact that some tools were marked as already reasonable actually made the report feel more trustworthy.",
                 author: "Mock testimonial, founder"
               },
               {
-                quote: "I would use this before renewing any AI contract above $1k/month.",
+                quote: "This feels closer to an internal budgeting tool than a marketing calculator.",
                 author: "Mock testimonial, finance lead"
               }
             ].map((item) => (
@@ -145,7 +145,7 @@ export default function Home() {
         <div className="grid gap-10 md:grid-cols-[0.8fr_1.2fr]">
           <div>
             <Badge variant="secondary">FAQ</Badge>
-            <h2 className="mt-4 text-3xl font-semibold tracking-normal">Built to be forwarded to finance.</h2>
+            <h2 className="mt-4 text-3xl font-semibold tracking-normal">Designed to make AI tooling costs easier to review.</h2>
           </div>
           <div className="space-y-4">
             {faqs.map((faq) => (

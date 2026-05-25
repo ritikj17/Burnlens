@@ -2,7 +2,7 @@
   "name": "burnlens",
   "version": "0.1.0",
   "private": true,
-  "description": "BurnLens audits startup AI spend and surfaces credible savings opportunities for Credex.",
+  "description": "BurnLens is a lightweight AI spend audit tool for startups that reviews tooling costs and identifies possible savings opportunities.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

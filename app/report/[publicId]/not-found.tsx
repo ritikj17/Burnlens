@@ -6,12 +6,18 @@ export default function ReportNotFound() {
   return (
     <main className="container flex min-h-[70vh] items-center justify-center py-16">
       <div className="max-w-lg text-center">
-        <h1 className="text-3xl font-semibold tracking-normal">Report not found</h1>
+        <h1 className="text-3xl font-semibold tracking-normal">
+          Report not found
+        </h1>
+
         <p className="mt-3 text-muted-foreground">
-          This audit may have been removed or the URL may be incomplete.
+          This report may no longer exist or the shared link may be incomplete.
         </p>
+
         <Button asChild className="mt-6">
-          <Link href="/">Run a new audit</Link>
+          <Link href="/">
+            Create a new audit
+          </Link>
         </Button>
       </div>
     </main>

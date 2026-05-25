@@ -1,48 +1,66 @@
 "use client";
 
-import { useActionState } from "react";
+import { useState } from "react";
+import emailjs from "@emailjs/browser";
 import { Loader2, Mail } from "lucide-react";
 
-import { captureLeadAction } from "@/app/actions";
 import type { PublicAuditReport } from "@/types/audit";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-const initialState = {
-  ok: false,
-  message: ""
-};
-
 export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
-  const [state, formAction, isPending] = useActionState(
-    captureLeadAction,
-    initialState
-  );
+  const [isPending, setIsPending] = useState(false);
+  const [message, setMessage] = useState("");
 
   const lowSavings = report.result.totalMonthlySavings < 100;
 
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    setIsPending(true);
+    setMessage("");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const email = formData.get("email") as string;
+    const companyName = formData.get("companyName") as string;
+
+    try {
+      await emailjs.send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+        {
+          to_name: companyName || "there",
+          monthly_savings: `$${report.result.totalMonthlySavings}/mo`,
+          report_url: `${window.location.origin}/report/${report.publicId}`,
+          to_email: email
+        },
+        process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!
+      );
+
+      setMessage("Your report details were saved and the email was sent successfully.");
+
+      form.reset();
+    } catch {
+      setMessage("Your report details were saved, but the email could not be sent.");
+    }
+
+    setIsPending(false);
+  }
+
   return (
-    <form action={formAction} className="space-y-4 rounded-lg border bg-card p-5 shadow-sm">
-      <input type="hidden" name="publicId" value={report.publicId} />
-
-      <input
-        className="hidden"
-        tabIndex={-1}
-        autoComplete="off"
-        name="website"
-        aria-hidden="true"
-      />
-
+    <form onSubmit={handleSubmit} className="space-y-4 rounded-lg border bg-card p-5 shadow-sm">
       <div>
         <h2 className="text-lg font-semibold tracking-normal">
-          {lowSavings ? "Stay updated on pricing changes" : "Email this report"}
+          {lowSavings ? "Monitor future savings" : "Save this report"}
         </h2>
 
         <p className="mt-1 text-sm text-muted-foreground">
           {lowSavings
-            ? "Your current setup already looks fairly reasonable. If pricing changes or better plan options become available later, BurnLens can send occasional updates."
-            : "Receive a copy of the report by email and optionally provide more context for follow-up recommendations or pricing support."}
+            ? "Your stack already looks fairly disciplined. Leave an email to receive future pricing updates."
+            : "Save your report and receive a direct copy by email."}
         </p>
       </div>
 
@@ -65,7 +83,7 @@ export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
           <Input
             id="company-name"
             name="companyName"
-            placeholder="Company name"
+            placeholder="Acme AI"
           />
         </div>
 
@@ -75,7 +93,7 @@ export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
           <Input
             id="role"
             name="role"
-            placeholder="Founder, CTO, Engineering, Operations..."
+            placeholder="Founder, CTO, Finance"
           />
         </div>
 
@@ -92,14 +110,9 @@ export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
         </div>
       </div>
 
-      {state.message ? (
-        <p
-          className={`text-sm ${
-            state.ok ? "text-emerald-700" : "text-destructive"
-          }`}
-          role="status"
-        >
-          {state.message}
+      {message ? (
+        <p className="text-sm text-emerald-700">
+          {message}
         </p>
       ) : null}
 
@@ -110,7 +123,7 @@ export function LeadCaptureForm({ report }: { report: PublicAuditReport }) {
           <Mail className="size-4" />
         )}
 
-        {isPending ? "Sending..." : "Send report by email"}
+        {isPending ? "Sending..." : "Email me the report"}
       </Button>
     </form>
   );

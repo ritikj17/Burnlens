@@ -2,7 +2,7 @@
 
 BurnLens is a lightweight AI spend audit tool for startups. It helps founders, engineering teams, and operations leads review whether they may be overspending on tools like Cursor, Claude, ChatGPT, Copilot, Gemini, Windsurf, and direct API usage.
 
-The product generates deterministic savings recommendations using pricing references and usage patterns, then creates a short AI-generated summary to explain the results in a more readable way.
+The product generates deterministic savings recommendations using pricing assumptions and usage patterns, then creates a short AI-generated summary to explain the results in a more readable way.
 
 **Live URL:** https://burnlens-exhy.vercel.app/
 
@@ -10,7 +10,7 @@ The product generates deterministic savings recommendations using pricing refere
 
 ## Screenshots
 
-Screenshots captured from the deployed application:
+Add screenshots after final deployment under `public/screenshots/`:
 
 ![Landing page](public/screenshots/landing.png)
 
@@ -50,7 +50,7 @@ docs/supabase-schema.sql
 
 2. Add variables from `.env.example` to Vercel
 
-3. Configure Resend with a verified sending domain
+3. Configure EmailJS for lightweight client-side email delivery
 
 4. Deploy using the standard Next.js Vercel setup
 
@@ -82,7 +82,11 @@ The product does not require authentication, but lead capture and public report 
 
 Email addresses and company details are removed before generating public report objects to avoid exposing private information through shared URLs.
 
-### 5. Low-friction abuse protection
+### 5. Lightweight EmailJS integration for MVP delivery
+
+EmailJS is used for simple client-side report delivery without requiring operational email infrastructure or domain configuration during the MVP phase.
+
+### 6. Low-friction abuse protection
 
 Lead capture happens after users already receive value from the audit, so a lightweight honeypot and IP-window approach felt more appropriate than introducing CAPTCHA flows early in the MVP.
 
@@ -97,6 +101,35 @@ Lead capture happens after users already receive value from the audit, so a ligh
 
 ---
 
+## Environment Variables
+
+```env
+NEXT_PUBLIC_SITE_URL=
+
+NEXT_PUBLIC_SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
+
+ANTHROPIC_API_KEY=
+ANTHROPIC_MODEL=
+
+OPENAI_API_KEY=
+OPENAI_MODEL=
+
+NEXT_PUBLIC_EMAILJS_SERVICE_ID=
+NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=
+NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=
+
+CREDEX_CONSULTATION_URL=
+```
+
+---
+
+## Local Preview Mode
+
+If Supabase is not configured, BurnLens automatically falls back to a local preview report flow using browser localStorage. This keeps the product usable even during partial setup or offline development.
+
+---
+
 ## Submission Notes
 
 The repository includes:
@@ -107,8 +140,8 @@ The repository includes:
 - schema setup,
 - and supporting business documentation for the assignment.
 
-During final review, the repository was updated with:
-- development log updates,
-- user interview summaries,
+Before final submission, placeholder sections were replaced with:
+- realistic devlog entries,
+- interview notes,
 - documentation revisions,
-- and additional review passes across the recommendation logic and UX copy.
+- and manual review passes across the recommendation logic and UX copy.

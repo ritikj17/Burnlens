@@ -97,14 +97,16 @@ export function SpendAuditForm() {
     setError(null);
 
     if (activeTools.length === 0) {
-      setError("Add monthly spend for at least one active AI tool before running the audit.");
+      setError("Enter spend details for at least one enabled tool before generating the audit.");
       return;
     }
 
     startTransition(async () => {
       const localResult = auditStartupSpend(input);
+
       try {
         const response = await createAuditAction(input);
+
         if (response.ok) {
           router.push(`/report/${response.publicId}`);
           return;
@@ -122,6 +124,7 @@ export function SpendAuditForm() {
           result: localResult,
           aiSummary: fallbackSummary(localResult)
         });
+
         saveLocalReport(fallbackReport);
         setError(`${response.error} Showing a local preview instead.`);
         router.push("/report/local-preview");
@@ -132,6 +135,7 @@ export function SpendAuditForm() {
           result: localResult,
           aiSummary: fallbackSummary(localResult)
         });
+
         saveLocalReport(fallbackReport);
         router.push("/report/local-preview");
       }
@@ -143,32 +147,54 @@ export function SpendAuditForm() {
       <CardHeader className="space-y-3">
         <div className="flex items-center justify-between gap-3">
           <Badge variant="outline">Free audit</Badge>
+
           <Button type="button" variant="ghost" size="sm" onClick={resetForm}>
             <RotateCcw className="size-4" />
             Reset
           </Button>
         </div>
-        <CardTitle className="text-2xl tracking-normal">AI spend input</CardTitle>
+
+        <CardTitle className="text-2xl tracking-normal">
+          AI tooling overview
+        </CardTitle>
+
+        <p className="text-sm text-muted-foreground">
+          Enter the tools, plans, and approximate monthly spend currently used by your team.
+        </p>
       </CardHeader>
+
       <CardContent>
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="team-size">Team size</Label>
+
               <Input
                 id="team-size"
                 type="number"
                 min={1}
                 value={input.teamSize}
-                onChange={(event) => setInput((current) => ({ ...current, teamSize: Number(event.target.value) }))}
+                onChange={(event) =>
+                  setInput((current) => ({
+                    ...current,
+                    teamSize: Number(event.target.value)
+                  }))
+                }
               />
             </div>
+
             <div className="space-y-2">
               <Label htmlFor="use-case">Primary use case</Label>
+
               <Select
                 id="use-case"
                 value={input.primaryUseCase}
-                onChange={(event) => setInput((current) => ({ ...current, primaryUseCase: event.target.value as PrimaryUseCase }))}
+                onChange={(event) =>
+                  setInput((current) => ({
+                    ...current,
+                    primaryUseCase: event.target.value as PrimaryUseCase
+                  }))
+                }
               >
                 <option value="coding">Coding</option>
                 <option value="writing">Writing</option>
@@ -182,27 +208,44 @@ export function SpendAuditForm() {
           <div className="space-y-3">
             {input.tools.map((tool) => {
               const pricing = pricingCatalog[tool.toolId];
+
               return (
                 <div key={tool.toolId} className="rounded-lg border bg-background p-4">
                   <div className="grid gap-4 lg:grid-cols-[1.1fr_1fr_0.8fr_0.65fr]">
                     <label className="flex items-center gap-3">
                       <Checkbox
                         checked={tool.enabled}
-                        onChange={(event) => updateTool(tool.toolId, { enabled: event.currentTarget.checked })}
+                        onChange={(event) =>
+                          updateTool(tool.toolId, {
+                            enabled: event.currentTarget.checked
+                          })
+                        }
                         aria-label={`Enable ${getToolInputLabel(tool.toolId)}`}
                       />
+
                       <span>
-                        <span className="block text-sm font-semibold">{pricing.name}</span>
-                        <span className="text-xs text-muted-foreground">{pricing.category}</span>
+                        <span className="block text-sm font-semibold">
+                          {pricing.name}
+                        </span>
+
+                        <span className="text-xs text-muted-foreground capitalize">
+                          {pricing.category} tool
+                        </span>
                       </span>
                     </label>
+
                     <div className="space-y-2">
                       <Label htmlFor={`${tool.toolId}-plan`}>Plan</Label>
+
                       <Select
                         id={`${tool.toolId}-plan`}
                         value={tool.planId}
                         disabled={!tool.enabled}
-                        onChange={(event) => updateTool(tool.toolId, { planId: event.target.value })}
+                        onChange={(event) =>
+                          updateTool(tool.toolId, {
+                            planId: event.target.value
+                          })
+                        }
                       >
                         {pricing.plans.map((plan) => (
                           <option key={plan.id} value={plan.id}>
@@ -211,27 +254,45 @@ export function SpendAuditForm() {
                         ))}
                       </Select>
                     </div>
+
                     <div className="space-y-2">
-                      <Label htmlFor={`${tool.toolId}-spend`}>Monthly spend</Label>
+                      <Label htmlFor={`${tool.toolId}-spend`}>
+                        Monthly spend
+                      </Label>
+
                       <Input
                         id={`${tool.toolId}-spend`}
                         type="number"
                         min={0}
                         inputMode="decimal"
+                        placeholder="0"
                         value={tool.monthlySpend}
                         disabled={!tool.enabled}
-                        onChange={(event) => updateTool(tool.toolId, { monthlySpend: Number(event.target.value) })}
+                        onChange={(event) =>
+                          updateTool(tool.toolId, {
+                            monthlySpend: Number(event.target.value)
+                          })
+                        }
                       />
                     </div>
+
                     <div className="space-y-2">
-                      <Label htmlFor={`${tool.toolId}-seats`}>Seats</Label>
+                      <Label htmlFor={`${tool.toolId}-seats`}>
+                        Seats
+                      </Label>
+
                       <Input
                         id={`${tool.toolId}-seats`}
                         type="number"
                         min={1}
+                        placeholder="1"
                         value={tool.seats}
                         disabled={!tool.enabled}
-                        onChange={(event) => updateTool(tool.toolId, { seats: Number(event.target.value) })}
+                        onChange={(event) =>
+                          updateTool(tool.toolId, {
+                            seats: Number(event.target.value)
+                          })
+                        }
                       />
                     </div>
                   </div>
@@ -249,22 +310,42 @@ export function SpendAuditForm() {
 
           <div className="grid gap-3 rounded-lg border bg-muted/45 p-4 text-sm sm:grid-cols-3">
             <div>
-              <span className="block text-muted-foreground">Entered spend</span>
-              <strong>{formatCurrency(preview.totalCurrentMonthlySpend)}</strong>
+              <span className="block text-muted-foreground">
+                Entered spend
+              </span>
+
+              <strong>
+                {formatCurrency(preview.totalCurrentMonthlySpend)}
+              </strong>
             </div>
+
             <div>
-              <span className="block text-muted-foreground">Potential savings</span>
-              <strong>{formatCurrency(preview.totalMonthlySavings)}/mo</strong>
+              <span className="block text-muted-foreground">
+                Estimated savings opportunity
+              </span>
+
+              <strong>
+                {formatCurrency(preview.totalMonthlySavings)}/mo
+              </strong>
             </div>
+
             <div>
-              <span className="block text-muted-foreground">Tools reviewed</span>
+              <span className="block text-muted-foreground">
+                Tools reviewed
+              </span>
+
               <strong>{activeTools.length}</strong>
             </div>
           </div>
 
           <Button type="submit" size="lg" className="w-full" disabled={isPending}>
-            {isPending ? <Loader2 className="size-4 animate-spin" /> : <Sparkles className="size-4" />}
-            {isPending ? "Generating audit..." : "Generate AI spend audit"}
+            {isPending ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Sparkles className="size-4" />
+            )}
+
+            {isPending ? "Preparing report..." : "Generate audit report"}
           </Button>
         </form>
       </CardContent>

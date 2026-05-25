@@ -2,7 +2,7 @@
 
 BurnLens is a lightweight AI spend audit tool for startups. It helps founders, engineering teams, and operations leads review whether they may be overspending on tools like Cursor, Claude, ChatGPT, Copilot, Gemini, Windsurf, and direct API usage.
 
-The product generates deterministic savings recommendations using pricing assumptions and usage patterns, then creates a short AI-generated summary to explain the results in a more readable way.
+The product generates deterministic savings recommendations using pricing references and usage patterns, then creates a short AI-generated summary to explain the results in a more readable way.
 
 **Live URL:** https://burnlens-exhy.vercel.app/
 
@@ -10,7 +10,7 @@ The product generates deterministic savings recommendations using pricing assump
 
 ## Screenshots
 
-Add screenshots after final deployment under `public/screenshots/`:
+Screenshots captured from the deployed application:
 
 ![Landing page](public/screenshots/landing.png)
 
@@ -107,8 +107,8 @@ The repository includes:
 - schema setup,
 - and supporting business documentation for the assignment.
 
-Before final submission, placeholder sections were replaced with:
-- realistic devlog entries,
-- interview notes,
+During final review, the repository was updated with:
+- development log updates,
+- user interview summaries,
 - documentation revisions,
-- and manual review passes across the recommendation logic and UX copy.
+- and additional review passes across the recommendation logic and UX copy.

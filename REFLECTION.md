@@ -36,8 +36,8 @@ One place where AI suggestions were actively misleading was around enterprise pl
 
 ## 5. Self-rating
 
-- **Discipline: 7/10** — The MVP is complete and the core systems are working, but the project still needs stronger real-world testing and more consistent day-by-day iteration.
-- **Code quality: 8/10** — The codebase is modular and reasonably maintainable, especially around the audit engine and shared types.
-- **Design sense: 8/10** — I spent a lot of time trying to make the product feel closer to a modern SaaS tool instead of a college project or admin dashboard.
-- **Problem-solving: 8/10** — The biggest improvements came from simplifying flows and handling failure states more carefully instead of continuously adding features.
-- **Entrepreneurial thinking: 7/10** — The product direction and GTM ideas are reasonably strong, but talking to more real users would probably change several assumptions in the current version.
+- **Discipline: 7/10** - The MVP is complete and the core systems are working, but the project still needs stronger real-world testing and more consistent day-by-day iteration.
+- **Code quality: 8/10** - The codebase is modular and reasonably maintainable, especially around the audit engine and shared types.
+- **Design sense: 8/10** - I spent a lot of time trying to make the product feel closer to a modern SaaS tool instead of a college project or admin dashboard.
+- **Problem-solving: 8/10** - The biggest improvements came from simplifying flows and handling failure states more carefully instead of continuously adding features.
+- **Entrepreneurial thinking: 7/10** - The product direction and GTM ideas are reasonably strong, but talking to more real users would probably change several assumptions in the current version.

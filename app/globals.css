@@ -5,23 +5,32 @@
 :root {
   --background: 42 30% 98%;
   --foreground: 220 24% 12%;
+
   --card: 0 0% 100%;
   --card-foreground: 220 24% 12%;
+
   --popover: 0 0% 100%;
   --popover-foreground: 220 24% 12%;
+
   --primary: 164 72% 24%;
   --primary-foreground: 160 60% 98%;
+
   --secondary: 45 80% 92%;
   --secondary-foreground: 34 56% 18%;
+
   --muted: 210 18% 94%;
   --muted-foreground: 220 11% 42%;
+
   --accent: 194 74% 90%;
   --accent-foreground: 205 70% 18%;
+
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 98%;
+
   --border: 220 15% 88%;
   --input: 220 15% 88%;
   --ring: 164 72% 24%;
+
   --radius: 0.5rem;
 }
 
@@ -35,7 +44,10 @@ html {
 
 body {
   @apply bg-background text-foreground antialiased;
-  font-feature-settings: "rlig" 1, "calt" 1;
+
+  font-feature-settings:
+    "rlig" 1,
+    "calt" 1;
 }
 
 ::selection {
@@ -44,16 +56,45 @@ body {
 
 .audit-grid {
   background-image:
-    linear-gradient(to right, rgba(15, 23, 42, 0.045) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(15, 23, 42, 0.045) 1px, transparent 1px);
+    linear-gradient(
+      to right,
+      rgba(15, 23, 42, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(15, 23, 42, 0.04) 1px,
+      transparent 1px
+    );
+
   background-size: 36px 36px;
 }
 
 .soft-band {
   background:
-    linear-gradient(115deg, rgba(16, 185, 129, 0.16), transparent 32%),
-    linear-gradient(245deg, rgba(14, 165, 233, 0.14), transparent 36%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 250, 252, 0.72));
+    linear-gradient(
+      115deg,
+      rgba(16, 185, 129, 0.14),
+      transparent 32%
+    ),
+    linear-gradient(
+      245deg,
+      rgba(14, 165, 233, 0.12),
+      transparent 36%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(248, 250, 252, 0.72)
+    );
+}
+
+details summary {
+  list-style: none;
+}
+
+details summary::-webkit-details-marker {
+  display: none;
 }
 
 @media print {

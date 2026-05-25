@@ -21,12 +21,16 @@ export function getSupabaseAdmin() {
     return null;
   }
 
-  return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!, {
-    auth: {
-      persistSession: false,
-      autoRefreshToken: false
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
+    {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false
+      }
     }
-  });
+  );
 }
 
 export async function insertAudit(params: {
@@ -35,8 +39,12 @@ export async function insertAudit(params: {
   aiSummary: string;
 }) {
   const supabase = getSupabaseAdmin();
+
   if (!supabase) {
-    return { ok: false as const, error: "Supabase is not configured." };
+    return {
+      ok: false as const,
+      error: "Supabase is not configured."
+    };
   }
 
   const publicPayload = buildPublicAuditReport({
@@ -61,21 +69,30 @@ export async function insertAudit(params: {
     .single();
 
   if (error) {
-    return { ok: false as const, error: error.message };
+    return {
+      ok: false as const,
+      error: error.message
+    };
   }
 
-  return { ok: true as const, data };
+  return {
+    ok: true as const,
+    data
+  };
 }
 
 export async function fetchPublicAudit(publicId: string) {
   const supabase = getSupabaseAdmin();
+
   if (!supabase) {
     return null;
   }
 
   const { data, error } = await supabase
     .from("audits")
-    .select("id, public_id, created_at, team_size, primary_use_case, tools, result, ai_summary, public_payload")
+    .select(
+      "id, public_id, created_at, team_size, primary_use_case, tools, result, ai_summary, public_payload"
+    )
     .eq("public_id", publicId)
     .maybeSingle<AuditRow>();
 
@@ -83,12 +100,16 @@ export async function fetchPublicAudit(publicId: string) {
     return null;
   }
 
-  return data.public_payload || buildPublicAuditReport({
-    publicId: data.public_id,
-    createdAt: data.created_at,
-    result: data.result,
-    aiSummary: data.ai_summary
-  });
+  // Older rows can still be reconstructed if public payloads are missing.
+  return (
+    data.public_payload ||
+    buildPublicAuditReport({
+      publicId: data.public_id,
+      createdAt: data.created_at,
+      result: data.result,
+      aiSummary: data.ai_summary
+    })
+  );
 }
 
 export async function insertLead(params: {
@@ -101,8 +122,12 @@ export async function insertLead(params: {
   userAgent?: string;
 }) {
   const supabase = getSupabaseAdmin();
+
   if (!supabase) {
-    return { ok: false as const, error: "Supabase is not configured." };
+    return {
+      ok: false as const,
+      error: "Supabase is not configured."
+    };
   }
 
   const { error } = await supabase.from("leads").insert({
@@ -118,8 +143,13 @@ export async function insertLead(params: {
   });
 
   if (error) {
-    return { ok: false as const, error: error.message };
+    return {
+      ok: false as const,
+      error: error.message
+    };
   }
 
-  return { ok: true as const };
+  return {
+    ok: true as const
+  };
 }

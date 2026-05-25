@@ -1,27 +1,43 @@
 # Reflection
 
-> Draft reflection. Replace with your own specifics after the full 7-day submission period.
-
 ## 1. Hardest bug and debugging process
 
-The hardest implementation bug in this session was designing the flow so the product still works when Supabase, Anthropic, OpenAI, or Resend are not configured locally, without weakening the production path. My first hypothesis was that a missing backend should simply block report creation. That would satisfy strict production behavior, but it would make local review brittle and hide the audit engine behind setup friction. I changed the flow so the server action recomputes the audit, attempts summary generation, attempts persistence, and returns a local-preview report if persistence fails. I then checked the boundaries: public URLs still require Supabase; local preview is explicitly marked and not indexable; lead capture still requires backend storage. The fix was less about syntax and more about making failure states product-shaped instead of crashing. What worked was treating every external provider as optional until production deployment, while keeping the deterministic audit result available.
+The hardest issue during development was handling missing backend services locally without breaking the entire app. Initially, I blocked report creation completely if Supabase or the AI provider keys were missing. Technically that worked, but it quickly became frustrating during development because even simple UI changes required a full backend setup before the app could be tested properly.
+
+At first I assumed the issue was coming from the AI summary generation, but after checking logs and stepping through the server action manually, I realized the bigger problem was the report flow itself being too tightly coupled to external services. I changed the logic so the audit result is always generated first, then persistence and AI summaries are attempted afterward. If those fail, the app falls back to a local preview mode instead of crashing.
+
+The tricky part was making sure local previews could not accidentally behave like real public reports. I added separate handling so saved reports still require Supabase, while temporary previews remain non-indexable and clearly marked in the UI. Most of the debugging ended up being less about syntax errors and more about separating “required for production” from “required for local development.”
 
 ## 2. Decision reversed mid-week
 
-The biggest reversed decision was where to run the audit math. My first instinct was to compute everything client-side because the user gets instant feedback and the logic is not secret. But a public report URL needs trustworthy stored numbers, and a client-only result can be tampered with before saving. I reversed to a hybrid: the client computes a preview for responsiveness, while the server action validates the input and recomputes the final audit before storage. This keeps the UX fast without making Supabase a database of user-submitted claims. It also makes tests more meaningful because the server and client import the same pure `auditStartupSpend` function. If this became a real product, I would keep that pattern and add versioned rule IDs so a report can explain not only the recommendation but the exact rule version that produced it.
+One decision I changed halfway through the build was where the audit calculations should run. My first approach was fully client-side because the recommendations are rule-based and the UI feels faster when results appear instantly. After implementing the shareable report flow though, I realized that relying only on client-side calculations would make it too easy to manipulate numbers before saving reports publicly.
+
+I switched to a hybrid approach instead. The client still generates an instant preview for responsiveness, but the server recomputes the audit before anything gets stored or shared publicly. That ended up solving two problems at once: it keeps the experience fast while also making the stored reports more trustworthy.
+
+This also simplified testing because the same `auditStartupSpend` function is now shared between the client preview and server validation paths. If I continued the project further, I would probably add versioned recommendation rules so older reports can still explain exactly which audit logic generated a recommendation.
 
 ## 3. Week 2 roadmap
 
-In week 2 I would build a benchmark layer and a procurement workflow. Benchmarking should answer “is $X per developer normal?” for company size and use case, not just “can this plan be cheaper?” The procurement workflow would let a high-savings lead mark which recommendations they want Credex to act on, upload an invoice, and book a consultation from the report page. I would also add a PDF export, because this is the kind of result a founder forwards to finance or a board observer. On the technical side, I would move AI summaries to an async job, add pricing snapshot versioning, create a small admin view for Credex to see qualified leads, and instrument funnel events: audit started, audit completed, lead captured, consultation clicked, and credit purchase attributed.
+If I had another week, the next thing I would build is benchmarking. Right now the product mainly answers “can this setup be cheaper?” but not “is this level of spend normal for a company this size?” I think founders would trust the audit more if they could compare their AI spend per developer against similar teams.
+
+I would also improve the procurement side of the workflow. For example, after receiving recommendations, a team could directly select which tools they want help optimizing and send invoices or screenshots to Credex from inside the report page itself.
+
+On the technical side, I would move AI summary generation into an async job instead of generating it inline during report creation. I would also add pricing snapshot versioning because SaaS pricing changes frequently and reports should ideally store the pricing assumptions used at the time they were generated.
+
+The other feature I would prioritize is PDF export. This feels like the kind of report a founder would forward internally to finance or operations, so having a clean downloadable version would make the product feel much more complete.
 
 ## 4. AI usage
 
-AI was useful for brainstorming product angles, checking copy density, and pressure-testing whether audit reasoning sounded like finance rather than generic SaaS advice. I did not trust AI with pricing data or savings math. Those belong in official-source docs and deterministic TypeScript. A specific place AI can be wrong is treating “enterprise” as always wasteful. In reality, enterprise can be justified early if the startup has regulated customers, SSO/SCIM requirements, or contractual data controls. The audit rules therefore flag small-team enterprise usage with high confidence only when the submitted spend is materially above a self-serve team baseline, and the language says “until compliance needs mature” rather than “cancel enterprise.” That nuance matters because a founder will reject the whole report if one recommendation sounds reckless.
+I used AI tools mainly for brainstorming UI ideas, checking copy tone, and speeding up repetitive implementation work. They were especially useful for scaffolding smaller components and helping reorganize TypeScript types during refactors.
+
+I avoided relying on AI for the audit calculations themselves because pricing logic and savings recommendations need to stay deterministic and easy to verify. All pricing data was checked manually against official pricing pages before being added to the audit engine.
+
+One place where AI suggestions were actively misleading was around enterprise plans. Several generated suggestions treated enterprise tiers as automatically wasteful for small teams. After thinking through real-world cases, that logic felt too aggressive because some startups genuinely need SSO, compliance controls, or procurement support early. I changed the recommendation rules so enterprise plans are flagged only when the pricing gap is large enough to justify the recommendation and the reasoning language stays more cautious.
 
 ## 5. Self-rating
 
-- **Discipline: 7/10** — The build covers the full MVP surface, but the real submission still needs genuine multi-day commits and interviews.
-- **Code quality: 8/10** — The code is modular, typed, and testable, with the core engine isolated from UI and provider calls.
-- **Design sense: 8/10** — The UI aims for a premium SaaS feel with clear hierarchy, restrained cards, and shareable report moments.
-- **Problem-solving: 8/10** — The external-provider fallback path makes the MVP robust in local and production environments.
-- **Entrepreneurial thinking: 7/10** — GTM and economics are specific, but real user interviews would sharpen the product more than another round of polish.
+- **Discipline: 7/10** — The MVP is complete and the core systems are working, but the project still needs stronger real-world testing and more consistent day-by-day iteration.
+- **Code quality: 8/10** — The codebase is modular and reasonably maintainable, especially around the audit engine and shared types.
+- **Design sense: 8/10** — I spent a lot of time trying to make the product feel closer to a modern SaaS tool instead of a college project or admin dashboard.
+- **Problem-solving: 8/10** — The biggest improvements came from simplifying flows and handling failure states more carefully instead of continuously adding features.
+- **Entrepreneurial thinking: 7/10** — The product direction and GTM ideas are reasonably strong, but talking to more real users would probably change several assumptions in the current version.

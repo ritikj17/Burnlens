@@ -6,24 +6,42 @@ Run all tests:
 npm test
 ```
 
-## Automated Tests
+---
+
+## Automated Test Coverage
 
 ### `tests/audit-engine.test.ts`
 
-1. **Single-user downgrade detection**  
-   Verifies Cursor Business with one seat recommends downgrading to Cursor Pro and saves $20/month.
+### 1. Single-user downgrade detection
 
-2. **Enterprise misuse detection**  
-   Verifies a four-person team on GitHub Copilot Enterprise is flagged and compared against Copilot Business.
+Verifies that a single-seat Cursor Business setup recommends downgrading to Cursor Pro when the pricing difference is significant.
 
-3. **Seat right-sizing**  
-   Verifies ChatGPT Team/Business with 10 paid seats for a four-person team recommends removing unused seats.
+---
 
-4. **API optimization logic**  
-   Verifies OpenAI API spend above $1,000/month gets deterministic model-routing and batch/credit savings.
+### 2. Enterprise plan mismatch detection
 
-5. **Duplicate coding assistant detection**  
-   Verifies Cursor + Copilot + Windsurf does not recommend paying every developer for all three tools.
+Verifies that very small teams on enterprise-style plans are compared against more appropriate self-serve business tiers.
 
-6. **Optimized low-savings stack**  
-   Verifies the engine honestly returns zero savings when spend matches published pricing and usage fit.
+---
+
+### 3. Seat right-sizing logic
+
+Verifies that paying for significantly more seats than the reported team size creates a recommendation to reduce unused licenses.
+
+---
+
+### 4. API optimization recommendations
+
+Verifies that large API spend triggers deterministic recommendations around routing, batching, or usage optimization patterns.
+
+---
+
+### 5. Duplicate coding assistant detection
+
+Verifies that overlapping coding assistant subscriptions are identified instead of assuming every engineer needs every tool.
+
+---
+
+### 6. Optimized low-savings stack
+
+Verifies that the engine can return low or zero savings when the submitted stack already appears reasonably aligned with pricing assumptions and team size.

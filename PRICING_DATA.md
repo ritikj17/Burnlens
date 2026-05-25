@@ -1,58 +1,128 @@
 # Pricing Data
 
-Pricing was verified on **2026-05-20** from official vendor pages. API token prices are included only when they inform reasoning, not for per-seat calculations.
+Pricing references were reviewed on **2026-05-20** using official vendor pricing pages. API token pricing is included only where it affects recommendation logic or routing assumptions, not as a precise billing calculator.
+
+---
 
 ## Cursor
 
-- Hobby: $0/user/month — https://cursor.com/en-US/pricing — verified 2026-05-20
-- Pro: $20/user/month — https://cursor.com/en-US/pricing — verified 2026-05-20
-- Business / Teams: $40/user/month — https://cursor.com/en-US/pricing — verified 2026-05-20
-- Enterprise: custom — https://cursor.com/en-US/pricing — verified 2026-05-20
+- Hobby: $0/user/month  
+  https://cursor.com/en-US/pricing
+
+- Pro: $20/user/month  
+  https://cursor.com/en-US/pricing
+
+- Business / Teams: $40/user/month  
+  https://cursor.com/en-US/pricing
+
+- Enterprise: custom pricing  
+  https://cursor.com/en-US/pricing
+
+---
 
 ## GitHub Copilot
 
-- Individual / Pro: $10/user/month — https://docs.github.com/en/billing/concepts/product-billing/github-copilot-licenses — verified 2026-05-20
-- Business: $19/user/month — https://docs.github.com/copilot/concepts/billing/billing-for-enterprises — verified 2026-05-20
-- Enterprise: $39/user/month — https://docs.github.com/copilot/concepts/billing/billing-for-enterprises — verified 2026-05-20
+- Individual / Pro: $10/user/month  
+  https://docs.github.com/en/billing/concepts/product-billing/github-copilot-licenses
+
+- Business: $19/user/month  
+  https://docs.github.com/copilot/concepts/billing/billing-for-enterprises
+
+- Enterprise: $39/user/month  
+  https://docs.github.com/copilot/concepts/billing/billing-for-enterprises
+
+---
 
 ## Claude
 
-- Free: $0/month — https://claude.com/pricing — verified 2026-05-20
-- Pro: $20/month — https://support.claude.com/en/articles/11049762-choose-a-claude-plan — verified 2026-05-20
-- Max: starts at $100/month — https://claude.com/pricing — verified 2026-05-20
-- Team Standard: $25/user/month monthly or $20/user/month annual, minimum 5 seats — https://claude.com/pricing — verified 2026-05-20
-- Enterprise: $20/seat plus usage at API rates for self-serve enterprise listing — https://claude.com/pricing — verified 2026-05-20
-- API direct: Sonnet 4.6 listed at $3 input / $15 output per million tokens; Batch API offers 50% discount — https://platform.claude.com/docs/en/about-claude/pricing — verified 2026-05-20
+- Free: $0/month  
+  https://claude.com/pricing
+
+- Pro: $20/month  
+  https://support.claude.com/en/articles/11049762-choose-a-claude-plan
+
+- Max: starts at $100/month  
+  https://claude.com/pricing
+
+- Team Standard: $25/user/month monthly or $20/user/month annual, minimum 5 seats  
+  https://claude.com/pricing
+
+- Enterprise: custom pricing with enterprise controls and negotiated terms  
+  https://claude.com/pricing
+
+- API pricing reference: Sonnet pricing and Batch API discounts  
+  https://platform.claude.com/docs/en/about-claude/pricing
+
+---
 
 ## ChatGPT
 
-- Plus: $20/month — https://help.openai.com/en/articles/6950777-chatgpt-plus- — verified 2026-05-20
-- Team / Business: $25/user/month monthly or $20/user/month annual, minimum 2 users — https://help.openai.com/en/articles/8792536-manage-billing-on-the-chatgpt-business-subscription-plan — verified 2026-05-20
-- Team naming note: ChatGPT Team was renamed ChatGPT Business on 2025-08-29, but BurnLens keeps the assignment-facing “Team” label as an alias — https://help.openai.com/en/articles/12111915-chatgpt-team-is-now-chatgpt-business — verified 2026-05-20
-- Enterprise: custom — https://chatgpt.com/pricing/ — verified 2026-05-20
-- API direct: GPT-5.2 listed at $1.75 input / $14 output per million tokens; GPT-5 mini listed at $0.25 input / $2 output — https://platform.openai.com/docs/pricing/ — verified 2026-05-20
+- Plus: $20/month  
+  https://help.openai.com/en/articles/6950777-chatgpt-plus-
+
+- Team / Business: $25/user/month monthly or $20/user/month annual, minimum 2 users  
+  https://help.openai.com/en/articles/8792536-manage-billing-on-the-chatgpt-business-subscription-plan
+
+- Naming note: OpenAI renamed ChatGPT Team to ChatGPT Business during 2025. BurnLens still uses “Team” in parts of the UI because many startups continue using the older terminology internally.  
+  https://help.openai.com/en/articles/12111915-chatgpt-team-is-now-chatgpt-business
+
+- Enterprise: custom pricing  
+  https://chatgpt.com/pricing/
+
+- API pricing reference: GPT-5-class and GPT-5 mini pricing examples  
+  https://platform.openai.com/docs/pricing/
+
+---
 
 ## Anthropic API Direct
 
-- Pay as you go: token-priced API usage — https://platform.claude.com/docs/en/about-claude/pricing — verified 2026-05-20
-- Batch workflows: 50% token discount for batch processing — https://platform.claude.com/docs/en/about-claude/pricing — verified 2026-05-20
-- Committed credits: Credex-relevant procurement path, modeled as a savings opportunity rather than a fixed public price — https://claude.com/pricing — verified 2026-05-20
+- Pay-as-you-go token pricing  
+  https://platform.claude.com/docs/en/about-claude/pricing
+
+- Batch workflows can reduce costs for non-urgent processing  
+  https://platform.claude.com/docs/en/about-claude/pricing
+
+- Committed credits and procurement discounts are treated as potential savings opportunities rather than fixed assumptions  
+  https://claude.com/pricing
+
+---
 
 ## OpenAI API Direct
 
-- Standard API: token-priced usage — https://platform.openai.com/docs/pricing/ — verified 2026-05-20
-- Mini/model mix: GPT-5 mini is materially cheaper than flagship GPT-5-class models — https://platform.openai.com/docs/pricing/ — verified 2026-05-20
-- Batch/Flex: modeled as a routing opportunity for non-urgent work — https://platform.openai.com/docs/pricing/ — verified 2026-05-20
+- Standard API pricing  
+  https://platform.openai.com/docs/pricing/
+
+- Smaller models are significantly cheaper for lightweight workloads  
+  https://platform.openai.com/docs/pricing/
+
+- Batch or deferred workloads may support lower effective pricing  
+  https://platform.openai.com/docs/pricing/
+
+---
 
 ## Gemini
 
-- Google AI Pro: $19.99/month — https://gemini.google/us/subscriptions/?hl=en — verified 2026-05-20
-- Google AI Ultra: starts at $99.99/month — https://gemini.google/us/subscriptions/?hl=en — verified 2026-05-20
-- Gemini API: token-priced usage; Batch Mode offers reduced pricing for eligible workloads — https://ai.google.dev/gemini-api/docs/pricing — verified 2026-05-20
+- Google AI Pro: $19.99/month  
+  https://gemini.google/us/subscriptions/?hl=en
+
+- Google AI Ultra: starts at $99.99/month  
+  https://gemini.google/us/subscriptions/?hl=en
+
+- Gemini API pricing and batch-mode references  
+  https://ai.google.dev/gemini-api/docs/pricing
+
+---
 
 ## Windsurf
 
-- Free: $0/month — https://windsurf.com/pricing — verified 2026-05-20
-- Pro: $20/user/month — https://windsurf.com/pricing — verified 2026-05-20
-- Teams: $40/user/month — https://windsurf.com/pricing — verified 2026-05-20
-- Enterprise: custom — https://windsurf.com/pricing — verified 2026-05-20
+- Free: $0/month  
+  https://windsurf.com/pricing
+
+- Pro: $20/user/month  
+  https://windsurf.com/pricing
+
+- Teams: $40/user/month  
+  https://windsurf.com/pricing
+
+- Enterprise: custom pricing  
+  https://windsurf.com/pricing

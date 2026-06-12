@@ -3,7 +3,10 @@ export function getSiteUrl() {
 }
 
 export function getConsultationUrl() {
-  return process.env.CONSULTATION_URL || "https://docs.google.com/forms/d/e/1FAIpQLSdnoglk32ChxkZ7MI9heCZRxxnGjw1eGt6sF4Qrwz9f31ZjDA/viewform?usp=publish-editor";
+  return (
+    process.env.CONSULTATION_URL ||
+    "https://forms.gle/replace-with-your-form"
+  );
 }
 
 export function hasSupabaseConfig() {

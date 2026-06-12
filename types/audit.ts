@@ -19,8 +19,6 @@ export type RecommendationCategory =
   | "downgrade"
   | "right-size"
   | "enterprise-misuse"
-  | "vendor-alternative"
-  | "credits"
   | "api-efficiency"
   | "duplicate-tool"
   | "optimized";

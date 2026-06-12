@@ -50,7 +50,7 @@ export function LeadCaptureForm({
       );
 
       setMessage(
-        "Your report details were saved and the email was sent successfully."
+        "Report link sent successfully. Check your inbox for a copy of this audit."
       );
 
       form.reset();
@@ -157,7 +157,7 @@ export function LeadCaptureForm({
 
         {isPending
           ? "Sending..."
-          : "Email me the report"}
+          : "Send report link"}
       </Button>
     </form>
   );

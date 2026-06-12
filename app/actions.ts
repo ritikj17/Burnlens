@@ -155,11 +155,6 @@ export async function captureLeadAction(
     ok: true,
     message: "Lead captured successfully."
   };
-
-  return {
-    ok: true,
-    message: "A confirmation email with the report link has been sent."
-  };
 }
 
 export type CreateAuditActionInput = {

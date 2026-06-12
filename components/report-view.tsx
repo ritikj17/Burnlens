@@ -4,10 +4,10 @@ import {
   Calendar,
   CheckCircle2,
   CircleDollarSign,
-  ShieldCheck
+  ShieldCheck,
 } from "lucide-react";
 
-import { getConsultationRecommended } from "@/lib/audit/audit-engine";
+import { shouldRecommendConsultation } from "@/lib/audit/audit-engine";
 import { getConsultationUrl } from "@/lib/env";
 import { formatCurrency } from "@/lib/utils";
 import type { PublicAuditReport } from "@/types/audit";
@@ -25,27 +25,22 @@ function ConfidenceBadge({ confidence }: { confidence: string }) {
     confidence === "high"
       ? "success"
       : confidence === "medium"
-      ? "warning"
-      : "muted";
+        ? "warning"
+        : "muted";
 
-  return (
-    <Badge variant={variant}>
-      {confidence} confidence estimate
-    </Badge>
-  );
+  return <Badge variant={variant}>{confidence} confidence estimate</Badge>;
 }
 
 export function ReportView({
   report,
-  shareUrl
+  shareUrl,
 }: {
   report: PublicAuditReport;
   shareUrl: string;
 }) {
   const result = report.result;
 
-  const recommendBurnlens =
-    getConsultationRecommended(result);
+  const recommendConsultation = shouldRecommendConsultation()(result);
 
   return (
     <main className="bg-background">
@@ -55,18 +50,18 @@ export function ReportView({
             <div>
               <Badge
                 variant={
-                  recommendBurnlens
+                  recommendConsultation
                     ? "success"
                     : result.savingsLevel === "optimized"
-                    ? "muted"
-                    : "secondary"
+                      ? "muted"
+                      : "secondary"
                 }
               >
-                {recommendBurnlens
+                {recommendConsultation
                   ? "Larger savings opportunity identified"
                   : result.savingsLevel === "optimized"
-                  ? "Reasonably optimized setup"
-                  : "Potential savings identified"}
+                    ? "Reasonably optimized setup"
+                    : "Potential savings identified"}
               </Badge>
 
               <h1 className="mt-5 max-w-3xl text-4xl font-semibold tracking-normal md:text-6xl">
@@ -86,10 +81,7 @@ export function ReportView({
             </div>
 
             <div className="no-print flex flex-col gap-3 sm:flex-row">
-              <ShareButton
-                url={shareUrl}
-                title="BurnLens audit report"
-              />
+              <ShareButton url={shareUrl} title="BurnLens audit report" />
 
               <PrintButton />
             </div>
@@ -113,18 +105,19 @@ export function ReportView({
             </p>
           </div>
 
-          {recommendBurnlens ? (
+          {recommendConsultation ? (
             <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-6">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
                   <h2 className="text-xl font-semibold tracking-normal text-emerald-950">
-                    BurnLens may be able to help reduce these costs
+                    Additional optimization opportunities may exist
                   </h2>
 
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-emerald-900">
-                    For teams with larger AI budgets, procurement support,
-                    pricing negotiations, or discounted credits may help reduce
-                    overall spend further.
+                    Teams with larger AI budgets often benefit from deeper
+                    vendor reviews, pricing optimization, workload
+                    consolidation, and procurement analysis beyond automated
+                    recommendations.
                   </p>
                 </div>
 
@@ -135,7 +128,6 @@ export function ReportView({
                     rel="noreferrer"
                   >
                     Explore consultation options
-
                     <ArrowRight className="size-4" />
                   </a>
                 </Button>
@@ -195,9 +187,7 @@ export function ReportView({
                           {recommendation.currentPlan} ·{" "}
                           {recommendation.currentSeats} seat
                           {recommendation.currentSeats === 1 ? "" : "s"} ·{" "}
-                          {formatCurrency(
-                            recommendation.currentMonthlySpend
-                          )}
+                          {formatCurrency(recommendation.currentMonthlySpend)}
                           /mo
                         </p>
 
@@ -225,8 +215,7 @@ export function ReportView({
 
                         {recommendation.recommendedPlan ? (
                           <span className="mt-3 block text-xs text-muted-foreground">
-                            Suggested plan:{" "}
-                            {recommendation.recommendedPlan}
+                            Suggested plan: {recommendation.recommendedPlan}
                           </span>
                         ) : null}
                       </div>
@@ -272,9 +261,7 @@ export function ReportView({
                   Estimated monthly savings
                 </span>
 
-                <strong>
-                  {formatCurrency(result.totalMonthlySavings)}
-                </strong>
+                <strong>{formatCurrency(result.totalMonthlySavings)}</strong>
               </div>
 
               <div className="flex items-center justify-between">
@@ -282,19 +269,13 @@ export function ReportView({
                   Estimated annual savings
                 </span>
 
-                <strong>
-                  {formatCurrency(result.totalAnnualSavings)}
-                </strong>
+                <strong>{formatCurrency(result.totalAnnualSavings)}</strong>
               </div>
 
               <div className="flex items-center justify-between">
-                <span className="text-sm text-muted-foreground">
-                  Use case
-                </span>
+                <span className="text-sm text-muted-foreground">Use case</span>
 
-                <strong className="capitalize">
-                  {report.primaryUseCase}
-                </strong>
+                <strong className="capitalize">{report.primaryUseCase}</strong>
               </div>
 
               <div className="flex items-center justify-between">
@@ -313,9 +294,7 @@ export function ReportView({
           <LeadCaptureForm report={report} />
 
           <Button variant="ghost" asChild className="w-full">
-            <Link href="/">
-              Create another report
-            </Link>
+            <Link href="/">Create another report</Link>
           </Button>
         </aside>
       </section>

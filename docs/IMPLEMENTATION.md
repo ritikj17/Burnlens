@@ -43,7 +43,7 @@ SUPABASE_SERVICE_ROLE_KEY=
 ANTHROPIC_API_KEY=
 ANTHROPIC_MODEL=claude-sonnet-4-6
 OPENAI_API_KEY=
-OPENAI_MODEL=gpt-5-mini
+OPENAI_MODEL=
 RESEND_API_KEY=
 RESEND_FROM_EMAIL=BurnLens <audit@yourdomain.com>
 CONSULTATION_URL=https://docs.google.com/forms/d/e/1FAIpQLSdnoglk32ChxkZ7MI9heCZRxxnGjw1eGt6sF4Qrwz9f31ZjDA/viewform?usp=publish-editor

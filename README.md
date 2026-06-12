@@ -4,20 +4,23 @@ BurnLens is a lightweight AI spend audit tool for startups. It helps founders, e
 
 The product generates deterministic savings recommendations using pricing assumptions and usage patterns, then creates a short AI-generated summary to explain the results in a more readable way.
 
-**Live URL:** https://burnlens-exhy.vercel.app/
+**Live URL:** https://burnlens-taupe.vercel.app/
 
 ---
 
 ## Screenshots
 
-Add screenshots after final deployment under `public/screenshots/`:
+### Landing Page
 
 ![Landing page](public/screenshots/landing.png)
 
+### Audit Report
+
 ![High-savings report](public/screenshots/report-high-savings.png)
 
-![Mobile form](public/screenshots/mobile-form.png)
+### Mobile Experience
 
+![Mobile form](public/screenshots/mobile-form.png)
 ---
 
 ## Quick Start
@@ -130,18 +133,8 @@ If Supabase is not configured, BurnLens automatically falls back to a local prev
 
 ---
 
-## Submission Notes
+## Project Notes
 
-The repository includes:
-- application code,
-- CI configuration,
-- pricing references,
-- prompts,
-- schema setup,
-- and supporting business documentation for the assignment.
+This repository contains the complete BurnLens application, including the audit engine, report generation flow, pricing references, documentation, testing setup, and deployment configuration.
 
-Before final submission, placeholder sections were replaced with:
-- realistic devlog entries,
-- interview notes,
-- documentation revisions,
-- and manual review passes across the recommendation logic and UX copy.
+The project was built as a portfolio-grade SaaS application to demonstrate full-stack development, product thinking, deterministic recommendation systems, and cloud deployment workflows.

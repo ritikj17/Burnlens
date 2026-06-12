@@ -30,11 +30,6 @@ const faqs = [
       "No. Recommendations are based on deterministic rules and pricing data. AI is only used to write the short summary paragraph."
   },
   {
-    question: "Why does Credex care about this?",
-    answer:
-      "Credex works with startup AI infrastructure and pricing workflows. BurnLens helps surface situations where pricing reviews or credits may reduce costs."
-  },
-  {
     question: "Can I share the report publicly?",
     answer:
       "Yes. Shared reports remove identifying information while preserving the recommendations and estimated savings details."

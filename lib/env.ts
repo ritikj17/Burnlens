@@ -2,8 +2,8 @@ export function getSiteUrl() {
   return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "http://localhost:3000";
 }
 
-export function getCredexConsultationUrl() {
-  return process.env.CREDEX_CONSULTATION_URL || "https://credex.rocks";
+export function getConsultationUrl() {
+  return process.env.CONSULTATION_URL || "https://docs.google.com/forms/d/e/1FAIpQLSdnoglk32ChxkZ7MI9heCZRxxnGjw1eGt6sF4Qrwz9f31ZjDA/viewform?usp=publish-editor";
 }
 
 export function hasSupabaseConfig() {

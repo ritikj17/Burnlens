@@ -382,6 +382,6 @@ export function auditStartupSpend(input: AuditInput): AuditResult {
   };
 }
 
-export function getCredexConsultationRecommended(result: AuditResult) {
+export function getConsultationRecommended(result: AuditResult) {
   return result.totalMonthlySavings >= auditThresholds.highSavingsMonthly;
 }

@@ -26,7 +26,7 @@ docs/                   Supabase schema and implementation notes
 - `app/page.tsx` — landing page, hero copy, social proof, FAQ, and embedded audit form.
 - `components/spend-audit-form.tsx` — persisted input form and create-audit flow.
 - `app/report/[publicId]/page.tsx` — public report route with Open Graph/Twitter metadata.
-- `components/report-view.tsx` — savings hero, recommendations, Credex CTA, lead capture, print/share controls.
+- `components/report-view.tsx` — savings hero, recommendations, Burnlens Consultation, lead capture, print/share controls.
 - `lib/audit/pricing-data.ts` — official pricing catalog used by the engine.
 - `lib/audit/recommendation-rules.ts` — thresholds and rule constants.
 - `lib/audit/audit-engine.ts` — deterministic savings calculations.
@@ -46,7 +46,7 @@ OPENAI_API_KEY=
 OPENAI_MODEL=gpt-5-mini
 RESEND_API_KEY=
 RESEND_FROM_EMAIL=BurnLens <audit@yourdomain.com>
-CREDEX_CONSULTATION_URL=https://credex.rocks
+CONSULTATION_URL=https://docs.google.com/forms/d/e/1FAIpQLSdnoglk32ChxkZ7MI9heCZRxxnGjw1eGt6sF4Qrwz9f31ZjDA/viewform?usp=publish-editor
 ```
 
 Anthropic is attempted first. OpenAI is the fallback. If both are missing or fail, the report still uses a deterministic finance summary.

@@ -7,8 +7,8 @@ import {
   ShieldCheck
 } from "lucide-react";
 
-import { getCredexConsultationRecommended } from "@/lib/audit/audit-engine";
-import { getCredexConsultationUrl } from "@/lib/env";
+import { getConsultationRecommended } from "@/lib/audit/audit-engine";
+import { getConsultationUrl } from "@/lib/env";
 import { formatCurrency } from "@/lib/utils";
 import type { PublicAuditReport } from "@/types/audit";
 
@@ -44,8 +44,8 @@ export function ReportView({
 }) {
   const result = report.result;
 
-  const recommendCredex =
-    getCredexConsultationRecommended(result);
+  const recommendBurnlens =
+    getConsultationRecommended(result);
 
   return (
     <main className="bg-background">
@@ -55,14 +55,14 @@ export function ReportView({
             <div>
               <Badge
                 variant={
-                  recommendCredex
+                  recommendBurnlens
                     ? "success"
                     : result.savingsLevel === "optimized"
                     ? "muted"
                     : "secondary"
                 }
               >
-                {recommendCredex
+                {recommendBurnlens
                   ? "Larger savings opportunity identified"
                   : result.savingsLevel === "optimized"
                   ? "Reasonably optimized setup"
@@ -113,12 +113,12 @@ export function ReportView({
             </p>
           </div>
 
-          {recommendCredex ? (
+          {recommendBurnlens ? (
             <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-6">
               <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
                 <div>
                   <h2 className="text-xl font-semibold tracking-normal text-emerald-950">
-                    Credex may be able to help reduce these costs
+                    BurnLens may be able to help reduce these costs
                   </h2>
 
                   <p className="mt-2 max-w-2xl text-sm leading-6 text-emerald-900">
@@ -130,7 +130,7 @@ export function ReportView({
 
                 <Button asChild>
                   <a
-                    href={getCredexConsultationUrl()}
+                    href={getConsultationUrl()}
                     target="_blank"
                     rel="noreferrer"
                   >

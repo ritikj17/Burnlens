@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: ReportPageProps): Promise<Met
 
   if (publicId === "local-preview") {
     return {
-      title: "Local BurnLens Report",
+      title: "BurnLens Local Preview",
       robots: {
         index: false,
         follow: false

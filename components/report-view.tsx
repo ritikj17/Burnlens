@@ -40,7 +40,7 @@ export function ReportView({
 }) {
   const result = report.result;
 
-  const recommendConsultation = shouldRecommendConsultation()(result);
+  const recommendConsultation = shouldRecommendConsultation(result);
 
   return (
     <main className="bg-background">

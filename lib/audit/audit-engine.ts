@@ -382,6 +382,6 @@ export function auditStartupSpend(input: AuditInput): AuditResult {
   };
 }
 
-export function shouldRecommendConsultation()(result: AuditResult) {
+export function shouldRecommendConsultation(result: AuditResult) {
   return result.totalMonthlySavings >= auditThresholds.highSavingsMonthly;
 }

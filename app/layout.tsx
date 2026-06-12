@@ -51,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" data-scroll-behavior="smooth">
       <body className={`${inter.variable} min-h-screen font-sans`}>
         <header className="no-print sticky top-0 z-40 border-b border-border/70 bg-background/88 backdrop-blur-xl">
           <div className="container flex h-16 items-center justify-between">
